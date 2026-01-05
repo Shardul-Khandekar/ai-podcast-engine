@@ -1,6 +1,7 @@
 import asyncio
 from agents.researcher import researcher_agent
 from agents.scriptwriter import script_agent
+from synthesis.tts_engine import generate_podcast_audio
 from agent_framework import SequentialBuilder, WorkflowOutputEvent
 import os
 
@@ -33,6 +34,8 @@ async def run_podcast_studio(topic):
         os.makedirs("data", exist_ok=True)
         with open("data/podcast_script.txt", "w") as f:
             f.write(final_script)
+
+        await generate_podcast_audio(final_script)
     else:
         print("Failed to extract script from workflow output.")
 
